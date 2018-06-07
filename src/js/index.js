@@ -138,9 +138,6 @@ elements.shopping.addEventListener('click', e => {
 /**
  * Like controller
  */
-// test
-state.likes = new Likes();
-likesView.toogleLikeMenu(state.likes.getNumLikes());
 
 const controlLike = () => {
     if (!state.likes) state.likes = new Likes();
@@ -167,6 +164,13 @@ const controlLike = () => {
     likesView.toogleLikeMenu(state.likes.getNumLikes());
 }
 
+// Restore liked recipes on page loads
+window.addEventListener('load', () => {
+    state.likes = new Likes();
+    state.likes.readStorage();
+    likesView.toogleLikeMenu(state.likes.getNumLikes());
+    state.likes.likes.forEach(like => likesView.renderLike(like));
+});
 
 // Handling recipe btn clicks
 elements.recipe.addEventListener('click', e => {
